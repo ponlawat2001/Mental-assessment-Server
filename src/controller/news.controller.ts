@@ -6,9 +6,14 @@ import NewsService from 'src/provider/news.service';
 class NewsController {
   constructor(private readonly newsService: NewsService) {}
 
-  @Get()
+  @Get('find')
   async find(): Promise<News[]> {
     return this.newsService.find();
+  }
+
+  @Get('findAll')
+  async findAll(): Promise<News[]> {
+    return this.newsService.findAll();
   }
 }
 export default NewsController;

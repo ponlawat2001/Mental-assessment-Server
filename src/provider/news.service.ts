@@ -1,27 +1,44 @@
-import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { News } from '../interface/news.interface';
-import { Newsinterface } from '../interface/news.interface';
-import { CollectionReference } from '@google-cloud/firestore';
+import { getFirestore, Timestamp } from 'firebase-admin/firestore';
 
 @Injectable()
 class NewsService {
   private readonly news: News[] = [];
 
-  constructor(
-    @Inject(Newsinterface.collectionName)
-    private Newsinterface: CollectionReference<Newsinterface>,
-  ) {}
-
-  create(news: News) {
-    this.news.push(news);
+  async find(): Promise<News[]> {
+    const db = getFirestore();
+    const NewsRef = db.collection('News');
+    const doc = await NewsRef.get();
+    if (doc.empty) {
+      console.log('Document is Empty');
+    } else {
+      doc.docs.map((element) => {
+        this.news.length = 0;
+        this.news.push({
+          news_ID: element.data().news_ID,
+          news_content: element.data().news_content,
+          image_URL: element.data().image_URL,
+          create_at: element.data().create_at,
+          update_at: element.data().update_at,
+          is_delete: element.data().is_delete,
+        });
+      });
+    }
+    return this.news;
   }
 
-  async find(): Promise<News[]> {
-    try {
-      const snapshot = await this.Newsinterface.get();
-      snapshot.forEach((doc) => this.news.push(doc.data()));
-    } catch (error) {}
-    return this.news;
+  findAll(): News[] {
+    return [
+      {
+        news_ID: '1',
+        news_content: 'Micmic',
+        image_URL: '12312',
+        update_at: Timestamp.now(),
+        create_at: Timestamp.now(),
+        is_delete: false,
+      },
+    ];
   }
 }
 
