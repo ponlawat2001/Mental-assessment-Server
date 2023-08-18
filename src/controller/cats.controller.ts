@@ -6,14 +6,9 @@ import CatsService from 'src/provider/cats.service';
 class CatsController {
   constructor(private readonly catsService: CatsService) {}
 
-  @Get('find')
+  @Get()
   async find(): Promise<Cat[]> {
     return this.catsService.find();
-  }
-
-  @Get('findAll')
-  async findAll(): Promise<Cat[]> {
-    return this.catsService.findAll();
   }
 }
 

@@ -1,4 +1,4 @@
-import firebaseAccount from './firebase_service_account.json';
+import firebaseAccount from './SA_KEY.json';
 
 const fs = require('firebase-admin');
 fs.initializeApp({
