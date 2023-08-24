@@ -8,3 +8,8 @@ export interface Users {
   update_at: string;
   lastsignin_at: string;
 }
+
+export interface Usercreate {
+  email: string;
+  password: string;
+}

@@ -33,7 +33,11 @@ export class AppModule implements NestModule {
       method: RequestMethod.ALL,
     });
     consumer.apply(PreauthMiddleware).forRoutes({
-      path: 'users/*',
+      path: 'users/findAll',
+      method: RequestMethod.ALL,
+    });
+    consumer.apply(PreauthMiddleware).forRoutes({
+      path: 'users/findCount',
       method: RequestMethod.ALL,
     });
   }

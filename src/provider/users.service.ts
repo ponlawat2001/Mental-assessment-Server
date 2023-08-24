@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Users } from '../interface/users.interface';
-import { getAuth } from 'firebase-admin/auth';
+import { getAuth as getAuthadmin } from 'firebase-admin/auth';
+import { getAuth, createUserWithEmailAndPassword, User } from 'firebase/auth';
 
 @Injectable()
 class UsersService {
@@ -16,9 +17,9 @@ class UsersService {
   };
 
   async findAll(): Promise<any> {
-    const listAllUsers = async (nextPageToken?) => {
+    const listAllUsers = async (nextPageToken?: string) => {
       this.users.length = 0;
-      await getAuth()
+      await getAuthadmin()
         .listUsers(1000, nextPageToken)
         .then((listUsersResult) => {
           listUsersResult.users.forEach((userRecord) => {
@@ -50,10 +51,10 @@ class UsersService {
   }
 
   async findCount(): Promise<any> {
-    const listAllUsers = async (nextPageToken?) => {
+    const listAllUsers = async (nextPageToken?: string) => {
       this.users.length = 0;
 
-      await getAuth()
+      await getAuthadmin()
         .listUsers(1000, nextPageToken)
         .then((listUsersResult) => {
           listUsersResult.users.forEach((userRecord) => {
@@ -83,6 +84,21 @@ class UsersService {
     };
     await listAllUsers();
     return this.usersresultcount;
+  }
+
+  async create(email: string, password: string) {
+    const auth = getAuth();
+    await createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user: any = userCredential.user;
+        this.usersresult.message = 'Ok';
+        this.usersresult.result = user.stsTokenManager.accessToken;
+      })
+      .catch((error) => {
+        this.usersresult.message = error.code;
+        this.usersresult.result = [];
+      });
+    return this.usersresult;
   }
 }
 

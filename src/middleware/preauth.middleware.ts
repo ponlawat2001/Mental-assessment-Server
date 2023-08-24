@@ -1,6 +1,6 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response } from 'express';
-import admin, { initializeApp } from 'firebase-admin';
+import admin from 'firebase-admin';
 
 @Injectable()
 class PreauthMiddleware implements NestMiddleware {
