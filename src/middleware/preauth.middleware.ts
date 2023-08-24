@@ -22,12 +22,18 @@ class PreauthMiddleware implements NestMiddleware {
     });
   }
 
+  private unauthorized(res: Response) {
+    res.status(403).json({
+      message: 'Unauthorized',
+    });
+  }
+
   use(req: Request, res: Response, next: Function) {
     const token = req.headers.authorization;
     if (token != null && token != '') {
       this.defaultAppadmin
         .auth()
-        .verifyIdToken(token.replace('Bearer', ''))
+        .verifyIdToken(token.replace('Bearer ', ''))
         .then(async (decodedToken: { email: string }) => {
           const user = {
             email: decodedToken.email,
@@ -40,7 +46,7 @@ class PreauthMiddleware implements NestMiddleware {
           this.accessDenied(req.url, res);
         });
     } else {
-      this.accessDenied(req.url, res);
+      this.unauthorized(res);
     }
   }
 }

@@ -25,6 +25,8 @@ class NewsService {
       this.news.length = 0;
       this.news.push({
         id: newsone.id,
+        title: newsone.data().title,
+        intro: newsone.data().intro,
         news_content: newsone.data().news_content,
         image_URL: newsone.data().image_URL,
         create_at: newsone.data().create_at,
@@ -50,6 +52,8 @@ class NewsService {
       doc.docs.map((element) => {
         this.news.push({
           id: element.id,
+          title: element.data().title,
+          intro: element.data().intro,
           news_content: element.data().news_content,
           image_URL: element.data().image_URL,
           create_at: element.data().create_at,
@@ -74,6 +78,8 @@ class NewsService {
       doc.docs.map((element) => {
         this.news.push({
           id: element.id,
+          intro: element.data().intro,
+          title: element.data().title,
           news_content: element.data().news_content,
           image_URL: element.data().image_URL,
           create_at: element.data().create_at,
