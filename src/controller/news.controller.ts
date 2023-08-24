@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { News } from 'src/interface/news.interface';
 import NewsService from 'src/provider/news.service';
 
@@ -24,6 +24,11 @@ class NewsController {
   @Post('create')
   async create(@Body() body: News): Promise<any> {
     return this.newsService.create(body);
+  }
+
+  @Put('update/:id')
+  async update(@Body() body: News, @Param('id') id: string): Promise<any> {
+    return this.newsService.update(body, id);
   }
 }
 export default NewsController;

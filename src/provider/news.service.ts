@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { News } from '../interface/news.interface';
 import { getFirestore } from 'firebase-admin/firestore';
+import { error } from 'console';
 
 @Injectable()
 class NewsService {
@@ -97,7 +98,24 @@ class NewsService {
 
   async create(body: News): Promise<News> {
     const db = getFirestore();
-    await db.collection('News').add(body);
+    await db
+      .collection('News')
+      .add(body)
+      .catch((error) => {
+        console.log(error);
+      });
+    return body;
+  }
+
+  async update(body: News, id: string) {
+    const db = getFirestore();
+    await db
+      .collection('News')
+      .doc(id)
+      .set(body)
+      .catch((error) => {
+        console.log(error);
+      });
     return body;
   }
 }

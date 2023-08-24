@@ -12,6 +12,8 @@ import NewsController from './controller/news.controller';
 import AuthController from './controller/auth.controller';
 import AuthService from './provider/auth.service';
 import FirebaseController from './controller/firebase.controller';
+import UsersController from './controller/users.controller';
+import UsersService from './provider/users.service';
 
 @Module({
   imports: [],
@@ -19,9 +21,10 @@ import FirebaseController from './controller/firebase.controller';
     AppController,
     NewsController,
     AuthController,
+    UsersController,
     FirebaseController,
   ],
-  providers: [AppService, NewsService, AuthService],
+  providers: [AppService, NewsService, AuthService, UsersService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
@@ -29,9 +32,9 @@ export class AppModule implements NestModule {
       path: 'news/*',
       method: RequestMethod.ALL,
     });
-    // consumer.apply(PreauthMiddleware).forRoutes({
-    //   path: '/',
-    //   method: RequestMethod.ALL,
-    // });
+    consumer.apply(PreauthMiddleware).forRoutes({
+      path: 'users/*',
+      method: RequestMethod.ALL,
+    });
   }
 }
