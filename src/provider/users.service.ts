@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Users } from '../interface/users.interface';
 import { getAuth as getAuthadmin } from 'firebase-admin/auth';
-import { getAuth, createUserWithEmailAndPassword, User } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 
 @Injectable()
 class UsersService {
@@ -13,7 +13,7 @@ class UsersService {
   };
   private usersresult = {
     message: '',
-    result: [],
+    result: null,
   };
 
   async findAll(): Promise<any> {
@@ -97,6 +97,26 @@ class UsersService {
       .catch((error) => {
         this.usersresult.message = error.code;
         this.usersresult.result = [];
+      });
+    return this.usersresult;
+  }
+
+  async update(body: Users, uid: string) {
+    await getAuthadmin()
+      .updateUser(uid, {
+        phoneNumber: body.phone,
+        displayName: body.displayname,
+        photoURL: body.avatar,
+      })
+      .then((userRecord) => {
+        this.usersresult.message = 'Successfully updated';
+        this.usersresult.result = userRecord;
+        console.log('Successfully updated user', userRecord.toJSON());
+      })
+      .catch((error) => {
+        this.usersresult.message = error.code;
+        this.usersresult.result = [];
+        console.log('Error updating user:', error);
       });
     return this.usersresult;
   }

@@ -1,6 +1,5 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
-import { User } from 'firebase/auth';
-import { Usercreate } from 'src/interface/users.interface';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Usercreate, Users } from 'src/interface/users.interface';
 import UsersService from 'src/provider/users.service';
 
 @Controller('users')
@@ -20,6 +19,11 @@ class UsersController {
   @Post('create')
   create(@Body() body: Usercreate): Promise<any> {
     return this.usersService.create(body.email, body.password);
+  }
+
+  @Put('update/:id')
+  update(@Body() body: Users, @Param('id') id: string): Promise<any> {
+    return this.usersService.update(body, id);
   }
 }
 
