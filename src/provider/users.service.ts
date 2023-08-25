@@ -111,12 +111,10 @@ class UsersService {
       .then((userRecord) => {
         this.usersresult.message = 'Successfully updated';
         this.usersresult.result = userRecord;
-        console.log('Successfully updated user', userRecord.toJSON());
       })
       .catch((error) => {
         this.usersresult.message = error.code;
         this.usersresult.result = [];
-        console.log('Error updating user:', error);
       });
     return this.usersresult;
   }
