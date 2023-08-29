@@ -40,5 +40,13 @@ export class AppModule implements NestModule {
       path: 'users/findCount',
       method: RequestMethod.ALL,
     });
+    consumer.apply(PreauthMiddleware).forRoutes({
+      path: 'users/findOne',
+      method: RequestMethod.ALL,
+    });
+    consumer.apply(PreauthMiddleware).forRoutes({
+      path: 'users/update/*',
+      method: RequestMethod.ALL,
+    });
   }
 }

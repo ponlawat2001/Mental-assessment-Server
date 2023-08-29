@@ -1,10 +1,23 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Put,
+  Delete,
+} from '@nestjs/common';
 import { Usercreate, Users } from 'src/interface/users.interface';
 import UsersService from 'src/provider/users.service';
 
 @Controller('users')
 class UsersController {
   constructor(private readonly usersService: UsersService) {}
+
+  @Get('findOne/:id')
+  findOne(@Param('id') id: string): Promise<any> {
+    return this.usersService.findOne(id);
+  }
 
   @Get('findAll')
   findAll(): Promise<any> {
@@ -24,6 +37,11 @@ class UsersController {
   @Put('update/:id')
   update(@Body() body: Users, @Param('id') id: string): Promise<any> {
     return this.usersService.update(body, id);
+  }
+
+  @Delete('delete/:id')
+  delete(@Param('id') id: string): Promise<any> {
+    return this.usersService.delete(id);
   }
 }
 

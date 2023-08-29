@@ -16,6 +16,36 @@ class UsersService {
     result: null,
   };
 
+  async findOne(id: string): Promise<any> {
+    const OneUsers = async (id: string) => {
+      this.users.length = 0;
+      await getAuthadmin()
+        .getUser(id)
+        .then((userRecord) => {
+          this.users.push({
+            user_ID: userRecord.uid,
+            avatar:
+              userRecord.photoURL ??
+              'https://cdn-icons-png.flaticon.com/512/1811/1811885.png',
+            phone: userRecord.phoneNumber,
+            displayname: userRecord.displayName,
+            email: userRecord.email,
+            create_at: userRecord.metadata.creationTime,
+            update_at: userRecord.metadata.lastRefreshTime,
+            lastsignin_at: userRecord.metadata.lastSignInTime,
+          });
+          this.usersresult.message = 'Ok';
+          this.usersresult.result = this.users;
+        })
+        .catch((error) => {
+          this.usersresult.message = error.code;
+          this.usersresult.result = [];
+        });
+    };
+    await OneUsers(id);
+    return this.usersresult;
+  }
+
   async findAll(): Promise<any> {
     const listAllUsers = async (nextPageToken?: string) => {
       this.users.length = 0;
@@ -43,7 +73,8 @@ class UsersService {
           }
         })
         .catch((error) => {
-          console.log('Error listing users:', error);
+          this.usersresult.message = error.code;
+          this.usersresult.result = [];
         });
     };
     await listAllUsers();
@@ -53,7 +84,6 @@ class UsersService {
   async findCount(): Promise<any> {
     const listAllUsers = async (nextPageToken?: string) => {
       this.users.length = 0;
-
       await getAuthadmin()
         .listUsers(1000, nextPageToken)
         .then((listUsersResult) => {
@@ -79,7 +109,8 @@ class UsersService {
           }
         })
         .catch((error) => {
-          console.log('Error listing users:', error);
+          this.usersresult.message = error.code;
+          this.usersresult.result = [];
         });
     };
     await listAllUsers();
@@ -87,6 +118,7 @@ class UsersService {
   }
 
   async create(email: string, password: string) {
+    this.users.length = 0;
     const auth = getAuth();
     await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -102,6 +134,7 @@ class UsersService {
   }
 
   async update(body: Users, uid: string) {
+    this.users.length = 0;
     await getAuthadmin()
       .updateUser(uid, {
         phoneNumber: body.phone,
@@ -111,6 +144,21 @@ class UsersService {
       .then((userRecord) => {
         this.usersresult.message = 'Successfully updated';
         this.usersresult.result = userRecord;
+      })
+      .catch((error) => {
+        this.usersresult.message = error.code;
+        this.usersresult.result = [];
+      });
+    return this.usersresult;
+  }
+
+  async delete(id: string) {
+    this.users.length = 0;
+    await getAuthadmin()
+      .deleteUser(id)
+      .then(() => {
+        this.usersresult.message = 'Successfully Deleted';
+        this.usersresult.result = [];
       })
       .catch((error) => {
         this.usersresult.message = error.code;

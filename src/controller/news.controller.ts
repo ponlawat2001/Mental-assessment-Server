@@ -30,5 +30,10 @@ class NewsController {
   async update(@Body() body: News, @Param('id') id: string): Promise<any> {
     return this.newsService.update(body, id);
   }
+
+  @Put('delete/:id')
+  async delete(@Param('id') id: string): Promise<any> {
+    return this.newsService.delete(id);
+  }
 }
 export default NewsController;
