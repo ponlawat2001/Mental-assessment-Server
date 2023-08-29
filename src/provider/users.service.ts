@@ -23,7 +23,7 @@ class UsersService {
         .getUser(id)
         .then((userRecord) => {
           this.users.push({
-            user_ID: userRecord.uid,
+            id: userRecord.uid,
             avatar:
               userRecord.photoURL ??
               'https://cdn-icons-png.flaticon.com/512/1811/1811885.png',
@@ -54,7 +54,7 @@ class UsersService {
         .then((listUsersResult) => {
           listUsersResult.users.forEach((userRecord) => {
             this.users.push({
-              user_ID: userRecord.uid,
+              id: userRecord.uid,
               avatar:
                 userRecord.photoURL ??
                 'https://cdn-icons-png.flaticon.com/512/1811/1811885.png',
@@ -89,7 +89,7 @@ class UsersService {
         .then((listUsersResult) => {
           listUsersResult.users.forEach((userRecord) => {
             this.users.push({
-              user_ID: userRecord.uid,
+              id: userRecord.uid,
               avatar:
                 userRecord.photoURL ??
                 'https://cdn-icons-png.flaticon.com/512/1811/1811885.png',

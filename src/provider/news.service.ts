@@ -1,22 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { News } from '../interface/news.interface';
+import { News, Newsresult, Newsresultcount } from '../interface/news.interface';
 import { getFirestore } from 'firebase-admin/firestore';
-import { error } from 'console';
 
 @Injectable()
 class NewsService {
   private readonly news: News[] = [];
-  private newsresultcount = {
-    message: '',
-    count: 0,
-    result: [],
-  };
-  private newsresult = {
-    message: '',
-    result: [],
-  };
+  private readonly newsresult: Newsresult;
+  private readonly newsresultcount: Newsresultcount;
 
-  isdelete_check(data: any) {
+  private isdelete_check(data: any) {
     return data.is_delete == true ? true : false;
   }
 
