@@ -14,6 +14,8 @@ import AuthService from './provider/auth.service';
 import FirebaseController from './controller/firebase.controller';
 import UsersController from './controller/users.controller';
 import UsersService from './provider/users.service';
+import VentController from './controller/vent.controller';
+import VentService from './provider/vent.service';
 
 @Module({
   imports: [],
@@ -23,8 +25,9 @@ import UsersService from './provider/users.service';
     AuthController,
     UsersController,
     FirebaseController,
+    VentController,
   ],
-  providers: [AppService, NewsService, AuthService, UsersService],
+  providers: [AppService, NewsService, AuthService, UsersService, VentService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
@@ -46,6 +49,10 @@ export class AppModule implements NestModule {
     });
     consumer.apply(PreauthMiddleware).forRoutes({
       path: 'users/update/*',
+      method: RequestMethod.ALL,
+    });
+    consumer.apply(PreauthMiddleware).forRoutes({
+      path: 'vent/*',
       method: RequestMethod.ALL,
     });
   }

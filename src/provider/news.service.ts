@@ -5,8 +5,15 @@ import { getFirestore } from 'firebase-admin/firestore';
 @Injectable()
 class NewsService {
   private readonly news: News[] = [];
-  private readonly newsresult: Newsresult;
-  private readonly newsresultcount: Newsresultcount;
+  private newsresult: Newsresult = {
+    message: '',
+    result: null,
+  };
+  private newsresultcount: Newsresultcount = {
+    message: '',
+    count: 0,
+    result: null,
+  };
 
   private isdelete_check(data: any) {
     return data.is_delete == true ? true : false;
@@ -31,7 +38,6 @@ class NewsService {
         update_at: newsone.data().update_at,
         is_delete: newsone.data().is_delete,
       });
-      console.log(newsone.data());
       this.newsresult.message = 'Ok';
       this.newsresult.result = this.news;
     }
@@ -140,7 +146,7 @@ class NewsService {
     await db
       .collection('News')
       .doc(id)
-      .set({
+      .update({
         is_delete: true,
       })
       .then(() => {
