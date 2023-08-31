@@ -23,7 +23,7 @@ class PreauthMiddleware implements NestMiddleware {
   }
 
   private unauthorized(res: Response) {
-    res.status(403).json({
+    res.status(401).json({
       message: 'Unauthorized',
     });
   }
