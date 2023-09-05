@@ -6,10 +6,23 @@ import admin from 'firebase-admin';
 class PreauthMiddleware implements NestMiddleware {
   private defaultAppadmin: any;
   constructor() {
-    const serviceAccount = require('../../firebaseadmin/service-account.json');
+    require('dotenv').config();
+
+    const firebaseparam = {
+      type: process.env.type,
+      projectId: process.env.projectId,
+      clientEmail: process.env.clientEmail,
+      clientId: process.env.clientId,
+      privateKeyId: process.env.privateKeyId,
+      privateKey: process.env.privateKey,
+      authUri: process.env.auth_uri,
+      tokenUri: process.env.token_uri,
+      authProviderX509CertUrl: process.env.auth_provider_x509_cert_url,
+      clientC509CertUrl: process.env.client_x509_cert_url,
+    };
 
     this.defaultAppadmin = admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount),
+      credential: admin.credential.cert(firebaseparam),
     });
   }
 
