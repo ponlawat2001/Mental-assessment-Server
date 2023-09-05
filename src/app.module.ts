@@ -7,27 +7,16 @@ import {
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import PreauthMiddleware from './middleware/preauth.middleware';
-import NewsService from './provider/news.service';
-import NewsController from './controller/news.controller';
-import AuthController from './controller/auth.controller';
-import AuthService from './provider/auth.service';
 import FirebaseController from './controller/firebase.controller';
-import UsersController from './controller/users.controller';
-import UsersService from './provider/users.service';
-import VentController from './controller/vent.controller';
-import VentService from './provider/vent.service';
+import { AuthModule } from './modules/auth.module';
+import { NewsModule } from './modules/news.module';
+import { VentModule } from './modules/vent.module';
+import { UsersModule } from './modules/users.module';
 
 @Module({
-  imports: [],
-  controllers: [
-    AppController,
-    NewsController,
-    AuthController,
-    UsersController,
-    FirebaseController,
-    VentController,
-  ],
-  providers: [AppService, NewsService, AuthService, UsersService, VentService],
+  imports: [AuthModule, NewsModule, VentModule, UsersModule],
+  controllers: [AppController, FirebaseController],
+  providers: [AppService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
