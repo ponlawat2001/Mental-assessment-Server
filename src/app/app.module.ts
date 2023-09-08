@@ -6,12 +6,12 @@ import {
 } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import PreauthMiddleware from './middleware/preauth.middleware';
-import FirebaseController from './controller/firebase.controller';
-import { AuthModule } from './modules/auth.module';
-import { NewsModule } from './modules/news.module';
-import { VentModule } from './modules/vent.module';
-import { UsersModule } from './modules/users.module';
+import PreauthMiddleware from '../middleware/preauth.middleware';
+import FirebaseController from '../controller/firebase.controller';
+import { AuthModule } from '../modules/auth.module';
+import { NewsModule } from '../modules/news.module';
+import { VentModule } from '../modules/vent.module';
+import { UsersModule } from '../modules/users.module';
 
 @Module({
   imports: [AuthModule, NewsModule, VentModule, UsersModule],
