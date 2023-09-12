@@ -21,11 +21,11 @@ import { UsersModule } from '../modules/users.module';
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(PreauthMiddleware).forRoutes({
-      path: 'news/*/sdfdsfds',
+      path: 'news/*',
       method: RequestMethod.ALL,
     });
     consumer.apply(PreauthMiddleware).forRoutes({
-      path: 'users/findAll/sdfdsfsf',
+      path: 'users/findAll',
       method: RequestMethod.ALL,
     });
     consumer.apply(PreauthMiddleware).forRoutes({

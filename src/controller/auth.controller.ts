@@ -6,7 +6,7 @@ import AuthService from 'src/provider/auth.service';
 class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('/Anonymous/login/sdfdsf')
+  @Post('/Anonymous/login')
   async Anonymous_login(): Promise<any> {
     return this.authService.Anonymous_login();
   }
