@@ -12,6 +12,7 @@ import { AuthModule } from '../modules/auth.module';
 import { NewsModule } from '../modules/news.module';
 import { VentModule } from '../modules/vent.module';
 import { UsersModule } from '../modules/users.module';
+import { count, log } from 'console';
 
 @Module({
   imports: [AuthModule, NewsModule, VentModule, UsersModule],
@@ -20,29 +21,23 @@ import { UsersModule } from '../modules/users.module';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(PreauthMiddleware).forRoutes({
-      path: 'news/*',
-      method: RequestMethod.ALL,
-    });
-    consumer.apply(PreauthMiddleware).forRoutes({
-      path: 'users/findAll',
-      method: RequestMethod.ALL,
-    });
-    consumer.apply(PreauthMiddleware).forRoutes({
-      path: 'users/findCount',
-      method: RequestMethod.ALL,
-    });
-    consumer.apply(PreauthMiddleware).forRoutes({
-      path: 'users/findOne',
-      method: RequestMethod.ALL,
-    });
-    consumer.apply(PreauthMiddleware).forRoutes({
-      path: 'users/update/*',
-      method: RequestMethod.ALL,
-    });
-    consumer.apply(PreauthMiddleware).forRoutes({
-      path: 'vent/*',
-      method: RequestMethod.ALL,
+    type middlewareRoute = {
+      path: string;
+    };
+    let route: middlewareRoute[] = [
+      { path: 'news/*' },
+      { path: 'users/findAll' },
+      { path: 'users/findCount' },
+      { path: 'users/findOne' },
+      { path: 'users/update/*' },
+      { path: 'vent/*' },
+    ];
+    route.map((element) => {
+      log(element.path);
+      consumer.apply(PreauthMiddleware).forRoutes({
+        path: element.path,
+        method: RequestMethod.ALL,
+      });
     });
   }
 }

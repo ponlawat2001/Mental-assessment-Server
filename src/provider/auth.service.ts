@@ -12,7 +12,7 @@ import { res } from '../interface/auth.interface';
 class AuthService {
   private result: res = {
     message: '',
-    result: [],
+    result: '',
   };
 
   async Email_login(body: Login): Promise<any> {
@@ -25,7 +25,7 @@ class AuthService {
       })
       .catch((error: any) => {
         this.result.message = error.code;
-        this.result.result = [];
+        this.result.result = '';
       });
 
     return this.result;
@@ -41,7 +41,7 @@ class AuthService {
       })
       .catch((error: any) => {
         this.result.message = error.code;
-        this.result.result = [];
+        this.result.result = '';
       });
 
     return this.result;
