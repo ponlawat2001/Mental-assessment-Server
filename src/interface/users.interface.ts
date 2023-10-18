@@ -4,6 +4,7 @@ export interface Users {
   phone: string;
   displayname: string;
   email: string;
+  password: string;
   create_at: string;
   update_at: string;
   lastsignin_at: string;
