@@ -29,7 +29,9 @@ export class AppModule implements NestModule {
       { path: 'users/findAll' },
       { path: 'users/findCount' },
       { path: 'users/findOne' },
+      { path: 'users/findOneAvatar/*' },
       { path: 'users/update/*' },
+      { path: 'users/delete/*' },
       { path: 'vent/*' },
     ];
     route.map((element) => {
