@@ -1,10 +1,8 @@
-import { ConsoleLogger, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Users } from '../interface/users.interface';
 import { getAuth as getAuthadmin } from 'firebase-admin/auth';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { getFirestore } from 'firebase-admin/firestore';
-import { emit } from 'process';
-import { elementAt } from 'rxjs';
 
 @Injectable()
 class UsersService {
@@ -26,12 +24,19 @@ class UsersService {
     const doc = await queryRef.get();
     if (doc.empty) {
       console.log('Document is Empty');
-      return null;
+      this.usersresult.message = 'Document is Empty';
+      this.usersresult.result = [
+        {
+          email: '',
+          avatar: '',
+        },
+      ];
+      return this.usersresult;
     } else {
       const avatar: any[] = doc.docs.map((element) => {
         return element.data();
       });
-      this.usersresult.message = 'OK';
+      this.usersresult.message = 'Ok';
       this.usersresult.result = avatar;
       return this.usersresult;
     }
