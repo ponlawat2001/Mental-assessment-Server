@@ -7,8 +7,8 @@ import {
   Put,
   Delete,
 } from '@nestjs/common';
-import { Usercreate, Users } from 'src/interface/users.interface';
-import UsersService from 'src/provider/users.service';
+import { Usercreate, Users } from '@interface/users.interface';
+import UsersService from '@provider/users.service';
 
 @Controller('users')
 class UsersController {

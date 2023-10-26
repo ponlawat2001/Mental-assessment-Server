@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Users } from '../interface/users.interface';
+import { Users } from '@interface/users.interface';
 import { getAuth as getAuthadmin } from 'firebase-admin/auth';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { getFirestore } from 'firebase-admin/firestore';

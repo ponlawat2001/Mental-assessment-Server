@@ -1,5 +1,5 @@
 import { Controller, Get, Param } from '@nestjs/common';
-import VentService from 'src/provider/vent.service';
+import VentService from '@provider/vent.service';
 
 @Controller('vent')
 class VentController {

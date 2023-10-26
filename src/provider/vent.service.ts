@@ -1,10 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { getFirestore } from 'firebase-admin/firestore';
-import {
-  Vent,
-  Ventresult,
-  Ventresultcount,
-} from 'src/interface/vent.interface';
+import { Vent, Ventresult, Ventresultcount } from '@interface/vent.interface';
 @Injectable()
 class VentService {
   private vents: Vent[] = [];

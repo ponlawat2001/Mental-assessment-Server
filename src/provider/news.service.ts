@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { News, Newsresult, Newsresultcount } from '../interface/news.interface';
+import { News, Newsresult, Newsresultcount } from '@interface/news.interface';
 import { getFirestore } from 'firebase-admin/firestore';
 
 @Injectable()

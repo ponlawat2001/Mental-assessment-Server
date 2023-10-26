@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { Login } from 'src/interface/auth.interface';
+import { Login } from '@interface/auth.interface';
 import {
   getAuth,
   signInAnonymously,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
-import { getAuth as getAuthadmin } from 'firebase-admin/auth';
-import { res } from '../interface/auth.interface';
+import { res } from '@interface/auth.interface';
 
 @Injectable()
 class AuthService {

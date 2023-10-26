@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
-import { News } from 'src/interface/news.interface';
-import NewsService from 'src/provider/news.service';
+import { News } from '@interface/news.interface';
+import NewsService from '@provider/news.service';
 
 @Controller('news')
 class NewsController {
