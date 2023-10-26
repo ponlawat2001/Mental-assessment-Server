@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { getFirestore } from 'firebase-admin/firestore';
 import { Vent, Ventresult, Ventresultcount } from '@interface/vent.interface';
+import { firestore } from 'firebase-admin';
 @Injectable()
 class VentService {
   private vents: Vent[] = [];
@@ -99,6 +100,34 @@ class VentService {
       this.ventresult.result = this.vents;
     }
 
+    return this.ventresult;
+  }
+
+  async create(body: Vent): Promise<any> {
+    const db = getFirestore();
+    await db
+      .collection('Vent')
+      .add(<Vent>{
+        vent_content: body.vent_content,
+        owner: body.owner,
+        create_at: firestore.Timestamp.now(),
+        update_at: firestore.Timestamp.now(),
+        is_delete: body.is_delete,
+      })
+      .then(() => {
+        this.ventresult.message = 'Successfully Created';
+        this.ventresult.result = <Vent>{
+          vent_content: body.vent_content,
+          owner: body.owner,
+          create_at: firestore.Timestamp.now(),
+          update_at: firestore.Timestamp.now(),
+          is_delete: body.is_delete,
+        };
+      })
+      .catch((error) => {
+        this.ventresult.message = error.code;
+        this.ventresult.result = [];
+      });
     return this.ventresult;
   }
 }

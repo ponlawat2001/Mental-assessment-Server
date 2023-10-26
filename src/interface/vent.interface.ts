@@ -1,11 +1,12 @@
+import { Timestamp } from 'firebase-admin/firestore';
 import { Users } from './users.interface';
 
 export interface Vent {
   id: string;
   vent_content: string;
   owner: Users;
-  create_at: string;
-  update_at: string;
+  create_at: Timestamp;
+  update_at: Timestamp;
   is_delete: string;
 }
 
