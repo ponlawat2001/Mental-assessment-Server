@@ -20,7 +20,7 @@ class AuthService {
       .then((userCredential: any) => {
         this.result.message = 'Successful';
         this.result.result = userCredential.user.stsTokenManager.accessToken;
-        console.log(userCredential.user);
+        console.log(userCredential.user.stsTokenManager);
       })
       .catch((error: any) => {
         this.result.message = error.code;

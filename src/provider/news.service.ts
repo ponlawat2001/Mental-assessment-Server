@@ -115,7 +115,7 @@ class NewsService {
       .add(body)
       .then(() => {
         this.newsresult.message = 'Successfully Created';
-        this.newsresult.result = [];
+        this.newsresult.result = body;
       })
       .catch((error) => {
         this.newsresult.message = error.code;
