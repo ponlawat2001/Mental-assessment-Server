@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { News, Newsresult, Newsresultcount } from '@interface/news.interface';
 import { getFirestore } from 'firebase-admin/firestore';
+import { firestore } from 'firebase-admin';
 
 @Injectable()
 class NewsService {
@@ -112,7 +113,15 @@ class NewsService {
     const db = getFirestore();
     await db
       .collection('News')
-      .add(body)
+      .add(<News>{
+        title: body.title,
+        intro: body.intro,
+        image_URL: body.image_URL,
+        news_content: body.news_content,
+        update_at: firestore.Timestamp.now(),
+        create_at: firestore.Timestamp.now(),
+        is_delete: false,
+      })
       .then(() => {
         this.newsresult.message = 'Successfully Created';
         this.newsresult.result = body;
@@ -129,7 +138,13 @@ class NewsService {
     await db
       .collection('News')
       .doc(id)
-      .set(body)
+      .set(<News>{
+        title: body.title,
+        intro: body.intro,
+        image_URL: body.image_URL,
+        news_content: body.news_content,
+        update_at: firestore.Timestamp.now(),
+      })
       .then(() => {
         this.newsresult.message = 'Successfully Updated';
         this.newsresult.result = [];

@@ -19,11 +19,6 @@ class UsersController {
     return this.usersService.findOne(id);
   }
 
-  @Get('findOneAvatar/:email')
-  findOneAvatar(@Param('email') email: string): Promise<any> {
-    return this.usersService.findOneAvatar(email);
-  }
-
   @Get('findAll')
   findAll(): Promise<any> {
     return this.usersService.findAll();
