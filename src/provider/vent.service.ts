@@ -130,6 +130,56 @@ class VentService {
       });
     return this.ventresult;
   }
+
+  async update(body: Vent, id: string): Promise<any> {
+    const db = getFirestore();
+    await db
+      .collection('Vent')
+      .doc(id)
+      .update({
+        vent_content: body.vent_content,
+        update_at: firestore.Timestamp.now(),
+      })
+      .then(async () => {
+        const ventone = await db.collection('Vent').doc(id).get();
+
+        this.ventresult.message = 'Successfully Updated';
+        this.ventresult.result = {
+          id: ventone.id,
+          vent_content: ventone.data().vent_content,
+          owner: ventone.data().owner,
+          create_at: ventone.data().create_at,
+          update_at: ventone.data().update_at,
+          is_delete: ventone.data().is_delete,
+        };
+      })
+      .catch((error) => {
+        this.ventresult.message = error.code;
+        this.ventresult.result = [];
+      });
+
+    return this.ventresult;
+  }
+
+  async delete(id: string): Promise<any> {
+    const db = getFirestore();
+    await db
+      .collection('Vent')
+      .doc(id)
+      .update({
+        is_delete: true,
+      })
+      .then(() => {
+        this.ventresult.message = 'Successfully Deleted';
+        this.ventresult.result = [];
+      })
+      .catch((error) => {
+        this.ventresult.message = error.code;
+        this.ventresult.result = [];
+      });
+
+    return this.ventresult;
+  }
 }
 
 export default VentService;

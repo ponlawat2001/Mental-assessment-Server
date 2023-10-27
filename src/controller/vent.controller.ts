@@ -1,5 +1,5 @@
 import { Vent } from '@interface/vent.interface';
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import VentService from '@provider/vent.service';
 
 @Controller('vent')
@@ -24,6 +24,16 @@ class VentController {
   @Post('create')
   async create(@Body() body: Vent): Promise<any> {
     return this.ventService.create(body);
+  }
+
+  @Put('update/:id')
+  update(@Body() body: Vent, @Param('id') id: string): Promise<any> {
+    return this.ventService.update(body, id);
+  }
+
+  @Put('delete/:id')
+  delete(@Param('id') id: string): Promise<any> {
+    return this.ventService.delete(id);
   }
 }
 
