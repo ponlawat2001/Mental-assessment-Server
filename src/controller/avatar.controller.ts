@@ -6,9 +6,9 @@ import AvatarService from '@provider/avatar.service';
 class AvatarController {
   constructor(private readonly avatarService: AvatarService) {}
 
-  @Get('findOne/:id')
-  async findOne(@Param('id') id: string): Promise<any> {
-    return this.avatarService.findOne(id);
+  @Get('findOne/:email')
+  async findOne(@Param('email') email: string): Promise<any> {
+    return this.avatarService.findOne(email);
   }
 
   @Get('findAll')

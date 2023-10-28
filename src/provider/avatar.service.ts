@@ -63,20 +63,24 @@ class AvatarService {
     return this.avatarresultcount;
   }
 
-  async findOne(id: string): Promise<any> {
+  async findOne(email: string): Promise<any> {
     const db = getFirestore();
     await db
       .collection('Avatars')
-      .doc(id)
+      .where('email', '==', email)
       .get()
       .then((element) => {
-        this.avatar.push({
-          id: element.id,
-          email: element.data().email,
-          avatar: element.data().avatar,
-          create_at: element.data().create_at,
-          update_at: element.data().update_at,
+        this.avatar.length = 0;
+        element.forEach((element) => {
+          this.avatar.push({
+            id: element.id,
+            email: element.data().email,
+            avatar: element.data().avatar,
+            create_at: element.data().create_at,
+            update_at: element.data().update_at,
+          });
         });
+
         this.avatarresult.message = 'Ok';
         this.avatarresult.result = this.avatar;
         return this.avatarresult;
