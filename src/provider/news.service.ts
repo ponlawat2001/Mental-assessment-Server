@@ -48,7 +48,7 @@ class NewsService {
 
   async findAll(): Promise<any> {
     const db = getFirestore();
-    const NewsRef = db.collection('News');
+    const NewsRef = db.collection('News').orderBy('create_at', 'desc');
     const doc = await NewsRef.get();
     if (doc.empty) {
       console.log('Document is Empty');
