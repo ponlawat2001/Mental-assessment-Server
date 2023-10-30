@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { Login } from 'src/interface/auth.interface';
+import { Login } from '@interface/auth.interface';
 import {
   getAuth,
   signInAnonymously,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
-import { getAuth as getAuthadmin } from 'firebase-admin/auth';
-import { res } from '../interface/auth.interface';
+import { res } from '@interface/auth.interface';
 
 @Injectable()
 class AuthService {
@@ -21,7 +20,7 @@ class AuthService {
       .then((userCredential: any) => {
         this.result.message = 'Successful';
         this.result.result = userCredential.user.stsTokenManager.accessToken;
-        console.log(userCredential.user);
+        console.log(userCredential.user.stsTokenManager);
       })
       .catch((error: any) => {
         this.result.message = error.code;

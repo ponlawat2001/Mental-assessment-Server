@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { News, Newsresult, Newsresultcount } from '../interface/news.interface';
+import { News, Newsresult, Newsresultcount } from '@interface/news.interface';
 import { getFirestore } from 'firebase-admin/firestore';
+import { firestore } from 'firebase-admin';
 
 @Injectable()
 class NewsService {
@@ -47,7 +48,7 @@ class NewsService {
 
   async findAll(): Promise<any> {
     const db = getFirestore();
-    const NewsRef = db.collection('News');
+    const NewsRef = db.collection('News').orderBy('create_at', 'desc');
     const doc = await NewsRef.get();
     if (doc.empty) {
       console.log('Document is Empty');
@@ -112,10 +113,18 @@ class NewsService {
     const db = getFirestore();
     await db
       .collection('News')
-      .add(body)
+      .add(<News>{
+        title: body.title,
+        intro: body.intro,
+        image_URL: body.image_URL,
+        news_content: body.news_content,
+        update_at: firestore.Timestamp.now(),
+        create_at: firestore.Timestamp.now(),
+        is_delete: false,
+      })
       .then(() => {
         this.newsresult.message = 'Successfully Created';
-        this.newsresult.result = [];
+        this.newsresult.result = body;
       })
       .catch((error) => {
         this.newsresult.message = error.code;
@@ -129,7 +138,13 @@ class NewsService {
     await db
       .collection('News')
       .doc(id)
-      .set(body)
+      .set(<News>{
+        title: body.title,
+        intro: body.intro,
+        image_URL: body.image_URL,
+        news_content: body.news_content,
+        update_at: firestore.Timestamp.now(),
+      })
       .then(() => {
         this.newsresult.message = 'Successfully Updated';
         this.newsresult.result = [];

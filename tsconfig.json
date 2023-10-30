@@ -17,6 +17,15 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "paths": {
+      "@app/*": ["src/app/*"],
+      "@controller/*": ["src/controller/*"],
+      "@interface/*": ["src/interface/*"],
+      "@middleware/*": ["src/middleware/*"],
+      "@modules/*": ["src/module/*"],
+      "@provider/*": ["src/provider/*"],
+      "@type/*": ["src/type/*"]
+    }
   }
 }

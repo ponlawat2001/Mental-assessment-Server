@@ -1,10 +1,9 @@
-import { ConsoleLogger, Injectable } from '@nestjs/common';
-import { Users } from '../interface/users.interface';
+import { Injectable } from '@nestjs/common';
+import { Users, UsersAvatar } from '@interface/users.interface';
 import { getAuth as getAuthadmin } from 'firebase-admin/auth';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-import { getFirestore } from 'firebase-admin/firestore';
-import { emit } from 'process';
-import { elementAt } from 'rxjs';
+import { Timestamp, getFirestore } from 'firebase-admin/firestore';
+import { firestore } from 'firebase-admin';
 
 @Injectable()
 class UsersService {
@@ -18,24 +17,6 @@ class UsersService {
     message: '',
     result: null,
   };
-
-  async findOneAvatar(email: string): Promise<any> {
-    const db = getFirestore();
-    const UsersRef = db.collection('Users');
-    const queryRef = UsersRef.where('email', '==', email);
-    const doc = await queryRef.get();
-    if (doc.empty) {
-      console.log('Document is Empty');
-      return null;
-    } else {
-      const avatar: any[] = doc.docs.map((element) => {
-        return element.data();
-      });
-      this.usersresult.message = 'OK';
-      this.usersresult.result = avatar;
-      return this.usersresult;
-    }
-  }
 
   async findOne(id: string): Promise<any> {
     const OneUsers = async (id: string) => {
