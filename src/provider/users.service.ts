@@ -142,7 +142,6 @@ class UsersService {
       .updateUser(uid, {
         phoneNumber: body.phone,
         displayName: body.displayname,
-        photoURL: body.avatar,
       })
       .then((userRecord) => {
         this.usersresult.message = 'Successfully updated';

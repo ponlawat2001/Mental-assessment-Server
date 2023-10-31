@@ -138,7 +138,7 @@ class NewsService {
     await db
       .collection('News')
       .doc(id)
-      .set(<News>{
+      .update({
         title: body.title,
         intro: body.intro,
         image_URL: body.image_URL,

@@ -104,7 +104,7 @@ class AvatarService {
     await db
       .collection('Avatars')
       .doc(id)
-      .set(<Avatar>{
+      .update({
         email: body.email,
         avatar: body.avatar,
         update_at: firestore.Timestamp.now(),
