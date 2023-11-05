@@ -13,10 +13,19 @@ import { NewsModule } from '../modules/news.module';
 import { VentModule } from '../modules/vent.module';
 import { UsersModule } from '../modules/users.module';
 import { log } from 'console';
-import { AvatarModult } from 'src/modules/avatar.modult';
+import { AvatarModule } from 'src/modules/avatar.modult';
+import { VentChoiceModule } from 'src/modules/vent_choice.module';
 
 @Module({
-  imports: [AuthModule, NewsModule, VentModule, UsersModule, AvatarModult],
+  imports: [
+    AuthModule,
+    NewsModule,
+    VentModule,
+    VentChoiceModule,
+
+    UsersModule,
+    AvatarModule,
+  ],
   controllers: [AppController, FirebaseController],
   providers: [AppService],
 })

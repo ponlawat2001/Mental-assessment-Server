@@ -114,7 +114,7 @@ class AvatarService {
         this.avatarresult.result = [];
       })
       .catch((error) => {
-        this.avatarresult.message = error.code;
+        this.avatarresult.message = error;
         this.avatarresult.result = [];
       });
     return this.avatarresult;

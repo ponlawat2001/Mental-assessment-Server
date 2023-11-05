@@ -7,8 +7,6 @@ import {
   Put,
   Delete,
 } from '@nestjs/common';
-import { Usercreate, Users } from '@interface/users.interface';
-import UsersService from '@provider/users.service';
 import VentChoiceService from '@provider/vent_choice.service';
 import { VentChoice } from '@interface/vent_choice.interface';
 
@@ -33,12 +31,12 @@ class VentChoiceController {
 
   @Post('create')
   create(@Body() body: VentChoice): Promise<any> {
-    return this.ventChoiceService.create(body.choice);
+    return this.ventChoiceService.create(body);
   }
 
   @Put('update/:id')
-  update(@Param('id') id: string): Promise<any> {
-    return this.ventChoiceService.update(id);
+  update(@Body() body: VentChoice, @Param('id') id: string): Promise<any> {
+    return this.ventChoiceService.update(body, id);
   }
 
   @Delete('delete/:id')

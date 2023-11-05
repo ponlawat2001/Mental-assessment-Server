@@ -6,4 +6,4 @@ import { Module } from '@nestjs/common';
   controllers: [AvatarController],
   providers: [AvatarService],
 })
-export class AvatarModult {}
+export class AvatarModule {}
