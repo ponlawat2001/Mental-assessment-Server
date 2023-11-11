@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { getFirestore } from 'firebase-admin/firestore';
 import { Vent, Ventresult, Ventresultcount } from '@interface/vent.interface';
 import { firestore } from 'firebase-admin';
+import e from 'express';
 @Injectable()
 class VentService {
   private vents: Vent[] = [];
@@ -103,6 +104,31 @@ class VentService {
     return this.ventresult;
   }
 
+  async findOwner(email: string) {
+    const db = getFirestore();
+    const VentsRef = db.collection('Vent');
+    const vents = (
+      await VentsRef.where('owner', '==', email)
+        .where('is_delete', '==', false)
+        .get()
+    ).docs;
+    this.vents.length = 0;
+    vents.map((element) => {
+      this.vents.push({
+        id: element.id,
+        vent_content: element.data().vent_content,
+        owner: element.data().owner,
+        create_at: element.data().create_at,
+        update_at: element.data().update_at,
+        is_delete: element.data().is_delete,
+      });
+    });
+
+    this.ventresult.message = 'Ok';
+    this.ventresult.result = this.vents;
+    return this.ventresult;
+  }
+
   async create(body: Vent): Promise<any> {
     const db = getFirestore();
     await db
@@ -112,7 +138,7 @@ class VentService {
         owner: body.owner,
         create_at: firestore.Timestamp.now(),
         update_at: firestore.Timestamp.now(),
-        is_delete: body.is_delete,
+        is_delete: false,
       })
       .then(() => {
         this.ventresult.message = 'Successfully Created';
@@ -121,7 +147,7 @@ class VentService {
           owner: body.owner,
           create_at: firestore.Timestamp.now(),
           update_at: firestore.Timestamp.now(),
-          is_delete: body.is_delete,
+          is_delete: false,
         };
       })
       .catch((error) => {

@@ -7,7 +7,7 @@ export interface Vent {
   owner: Users;
   create_at: Timestamp;
   update_at: Timestamp;
-  is_delete: string;
+  is_delete: boolean;
 }
 
 export interface Ventresultcount {

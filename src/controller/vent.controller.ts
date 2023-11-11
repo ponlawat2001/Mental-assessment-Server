@@ -21,6 +21,11 @@ class VentController {
     return this.ventService.findOne(id);
   }
 
+  @Get('findOwner/:email')
+  findOwner(@Param('email') email: string): Promise<any> {
+    return this.ventService.findOwner(email);
+  }
+
   @Post('create')
   async create(@Body() body: Vent): Promise<any> {
     return this.ventService.create(body);
