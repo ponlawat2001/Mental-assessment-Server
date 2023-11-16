@@ -15,6 +15,7 @@ import { UsersModule } from '../modules/users.module';
 import { log } from 'console';
 import { AvatarModule } from 'src/modules/avatar.modult';
 import { VentChoiceModule } from 'src/modules/vent_choice.module';
+import { ContactModule } from 'src/modules/contact.module';
 
 @Module({
   imports: [
@@ -22,9 +23,9 @@ import { VentChoiceModule } from 'src/modules/vent_choice.module';
     NewsModule,
     VentModule,
     VentChoiceModule,
-
     UsersModule,
     AvatarModule,
+    ContactModule,
   ],
   controllers: [AppController, FirebaseController],
   providers: [AppService],
@@ -44,6 +45,7 @@ export class AppModule implements NestModule {
       { path: 'users/delete/*' },
       { path: 'avatars/*' },
       { path: 'vent/*' },
+      { path: 'contact/*' },
     ];
     route.map((element) => {
       log(element.path);
