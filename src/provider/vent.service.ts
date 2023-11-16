@@ -1,8 +1,7 @@
-import { Injectable } from '@nestjs/common';
-import { getFirestore } from 'firebase-admin/firestore';
+import { Injectable, Query } from '@nestjs/common';
+import { Filter, getFirestore } from 'firebase-admin/firestore';
 import { Vent, Ventresult, Ventresultcount } from '@interface/vent.interface';
 import { firestore } from 'firebase-admin';
-import e from 'express';
 @Injectable()
 class VentService {
   private vents: Vent[] = [];
@@ -29,22 +28,17 @@ class VentService {
     } else {
       this.vents.length = 0;
       doc.docs.map((element) => {
-        if (this.isdelete_check(element.data())) {
-          this.ventresult.message = 'Document doesnt exist';
-          this.ventresult.result = [];
-        } else {
-          console.log(element.data());
-          this.vents.push({
-            id: element.id,
-            vent_content: element.data().vent_content,
-            owner: element.data().owner,
-            create_at: element.data().create_at,
-            update_at: element.data().update_at,
-            is_delete: element.data().is_delete,
-          });
-          this.ventresult.message = 'Ok';
-          this.ventresult.result = this.vents;
-        }
+        console.log(element.data());
+        this.vents.push({
+          id: element.id,
+          vent_content: element.data().vent_content,
+          owner: element.data().owner,
+          create_at: element.data().create_at,
+          update_at: element.data().update_at,
+          is_delete: element.data().is_delete,
+        });
+        this.ventresult.message = 'Ok';
+        this.ventresult.result = this.vents;
       });
     }
     return this.ventresult;
@@ -108,8 +102,13 @@ class VentService {
     const db = getFirestore();
     const VentsRef = db.collection('Vent');
     const vents = (
-      await VentsRef.where('owner', '==', email)
-        .where('is_delete', '==', false)
+      await VentsRef.where(
+        Filter.and(
+          Filter.where('owner', '==', email),
+          Filter.where('is_delete', '==', false),
+        ),
+      )
+        .orderBy('update_at', 'desc')
         .get()
     ).docs;
     this.vents.length = 0;
@@ -168,7 +167,6 @@ class VentService {
       })
       .then(async () => {
         const ventone = await db.collection('Vent').doc(id).get();
-
         this.ventresult.message = 'Successfully Updated';
         this.ventresult.result = {
           id: ventone.id,
