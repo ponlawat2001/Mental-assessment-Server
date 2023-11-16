@@ -23,6 +23,7 @@ class ContactService {
         this.contact.push({
           id: element.id,
           name_contact: element.data().name_contact,
+          image_contact: element.data().image_contact,
           location_contact: element.data().location_contact,
           email_contact: element.data().email_contact,
           facebook_contact: element.data().facebook_contact,
@@ -45,6 +46,7 @@ class ContactService {
       .update({
         name_contact: body.name_contact,
         location_contact: body.location_contact,
+        image_contact: body.image_contact,
         email_contact: body.email_contact,
         line_contact: body.line_contact,
         facebook_contact: body.facebook_contact,

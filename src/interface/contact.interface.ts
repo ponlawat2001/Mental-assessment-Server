@@ -8,6 +8,7 @@ export interface Contact {
   phone_contact: String;
   location_contact: String;
   name_contact: String;
+  image_contact: String;
   update_at: Timestamp;
 }
 
