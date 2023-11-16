@@ -104,7 +104,7 @@ class AvatarService {
     await db
       .collection('Avatars')
       .doc(id)
-      .set(<Avatar>{
+      .update({
         email: body.email,
         avatar: body.avatar,
         update_at: firestore.Timestamp.now(),
@@ -114,7 +114,7 @@ class AvatarService {
         this.avatarresult.result = [];
       })
       .catch((error) => {
-        this.avatarresult.message = error.code;
+        this.avatarresult.message = error;
         this.avatarresult.result = [];
       });
     return this.avatarresult;

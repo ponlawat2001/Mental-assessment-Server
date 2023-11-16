@@ -13,10 +13,20 @@ import { NewsModule } from '../modules/news.module';
 import { VentModule } from '../modules/vent.module';
 import { UsersModule } from '../modules/users.module';
 import { log } from 'console';
-import { AvatarModult } from 'src/modules/avatar.modult';
+import { AvatarModule } from 'src/modules/avatar.modult';
+import { VentChoiceModule } from 'src/modules/vent_choice.module';
+import { ContactModule } from 'src/modules/contact.module';
 
 @Module({
-  imports: [AuthModule, NewsModule, VentModule, UsersModule, AvatarModult],
+  imports: [
+    AuthModule,
+    NewsModule,
+    VentModule,
+    VentChoiceModule,
+    UsersModule,
+    AvatarModule,
+    ContactModule,
+  ],
   controllers: [AppController, FirebaseController],
   providers: [AppService],
 })
@@ -35,6 +45,7 @@ export class AppModule implements NestModule {
       { path: 'users/delete/*' },
       { path: 'avatars/*' },
       { path: 'vent/*' },
+      { path: 'contact/*' },
     ];
     route.map((element) => {
       log(element.path);

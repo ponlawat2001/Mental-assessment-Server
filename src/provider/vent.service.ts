@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { getFirestore } from 'firebase-admin/firestore';
+import { Injectable, Query } from '@nestjs/common';
+import { Filter, getFirestore } from 'firebase-admin/firestore';
 import { Vent, Ventresult, Ventresultcount } from '@interface/vent.interface';
 import { firestore } from 'firebase-admin';
 @Injectable()
@@ -28,22 +28,17 @@ class VentService {
     } else {
       this.vents.length = 0;
       doc.docs.map((element) => {
-        if (this.isdelete_check(element.data())) {
-          this.ventresult.message = 'Document doesnt exist';
-          this.ventresult.result = [];
-        } else {
-          console.log(element.data());
-          this.vents.push({
-            id: element.id,
-            vent_content: element.data().vent_content,
-            owner: element.data().owner,
-            create_at: element.data().create_at,
-            update_at: element.data().update_at,
-            is_delete: element.data().is_delete,
-          });
-          this.ventresult.message = 'Ok';
-          this.ventresult.result = this.vents;
-        }
+        console.log(element.data());
+        this.vents.push({
+          id: element.id,
+          vent_content: element.data().vent_content,
+          owner: element.data().owner,
+          create_at: element.data().create_at,
+          update_at: element.data().update_at,
+          is_delete: element.data().is_delete,
+        });
+        this.ventresult.message = 'Ok';
+        this.ventresult.result = this.vents;
       });
     }
     return this.ventresult;
@@ -103,6 +98,36 @@ class VentService {
     return this.ventresult;
   }
 
+  async findOwner(email: string) {
+    const db = getFirestore();
+    const VentsRef = db.collection('Vent');
+    const vents = (
+      await VentsRef.where(
+        Filter.and(
+          Filter.where('owner', '==', email),
+          Filter.where('is_delete', '==', false),
+        ),
+      )
+        .orderBy('update_at', 'desc')
+        .get()
+    ).docs;
+    this.vents.length = 0;
+    vents.map((element) => {
+      this.vents.push({
+        id: element.id,
+        vent_content: element.data().vent_content,
+        owner: element.data().owner,
+        create_at: element.data().create_at,
+        update_at: element.data().update_at,
+        is_delete: element.data().is_delete,
+      });
+    });
+
+    this.ventresult.message = 'Ok';
+    this.ventresult.result = this.vents;
+    return this.ventresult;
+  }
+
   async create(body: Vent): Promise<any> {
     const db = getFirestore();
     await db
@@ -112,7 +137,7 @@ class VentService {
         owner: body.owner,
         create_at: firestore.Timestamp.now(),
         update_at: firestore.Timestamp.now(),
-        is_delete: body.is_delete,
+        is_delete: false,
       })
       .then(() => {
         this.ventresult.message = 'Successfully Created';
@@ -121,7 +146,7 @@ class VentService {
           owner: body.owner,
           create_at: firestore.Timestamp.now(),
           update_at: firestore.Timestamp.now(),
-          is_delete: body.is_delete,
+          is_delete: false,
         };
       })
       .catch((error) => {
@@ -142,7 +167,6 @@ class VentService {
       })
       .then(async () => {
         const ventone = await db.collection('Vent').doc(id).get();
-
         this.ventresult.message = 'Successfully Updated';
         this.ventresult.result = {
           id: ventone.id,
