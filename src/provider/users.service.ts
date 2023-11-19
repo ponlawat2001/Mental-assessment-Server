@@ -137,10 +137,17 @@ class UsersService {
   }
 
   async update(body: Users, uid: string) {
+    var phone: string;
+    if (body.phone.length == 10 && body.phone.charAt(0) == '0') {
+      phone = '+66' + body.phone.slice(1, 10);
+      console.log(phone);
+    } else {
+      phone = null;
+    }
     this.users.length = 0;
     await getAuthadmin()
       .updateUser(uid, {
-        phoneNumber: body.phone,
+        phoneNumber: phone,
         displayName: body.displayname,
       })
       .then((userRecord) => {
