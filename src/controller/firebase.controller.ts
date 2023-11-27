@@ -1,5 +1,6 @@
 import { Controller } from '@nestjs/common';
 import { initializeApp } from 'firebase/app';
+import firebaseAdmin from 'firebase-admin';
 
 @Controller()
 class FirebaseController {
@@ -13,6 +14,7 @@ class FirebaseController {
       messagingSenderId: process.env.messagingSenderId,
       appId: process.env.appId,
     };
+
     initializeApp(firebaseConfig);
   }
 }

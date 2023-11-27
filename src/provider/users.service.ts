@@ -2,8 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { Users, UsersAvatar } from '@interface/users.interface';
 import { getAuth as getAuthadmin } from 'firebase-admin/auth';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-import { Timestamp, getFirestore } from 'firebase-admin/firestore';
-import { firestore } from 'firebase-admin';
 
 @Injectable()
 class UsersService {
@@ -140,7 +138,6 @@ class UsersService {
     var phone: string;
     if (body.phone.length == 10 && body.phone.charAt(0) == '0') {
       phone = '+66' + body.phone.slice(1, 10);
-      console.log(phone);
     } else {
       phone = null;
     }

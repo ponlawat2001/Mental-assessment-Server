@@ -16,6 +16,7 @@ import { log } from 'console';
 import { AvatarModule } from 'src/modules/avatar.modult';
 import { VentChoiceModule } from 'src/modules/vent_choice.module';
 import { ContactModule } from 'src/modules/contact.module';
+import { StorageModule } from 'src/modules/storage.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { ContactModule } from 'src/modules/contact.module';
     UsersModule,
     AvatarModule,
     ContactModule,
+    StorageModule,
   ],
   controllers: [AppController, FirebaseController],
   providers: [AppService],
@@ -46,6 +48,7 @@ export class AppModule implements NestModule {
       { path: 'avatars/*' },
       { path: 'vent/*' },
       { path: 'contact/*' },
+      { path: 'storage/*' },
     ];
     route.map((element) => {
       log(element.path);
