@@ -1,30 +1,44 @@
 import {
-  Body,
   Controller,
   Get,
   Param,
   Post,
-  Put,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
 import StorageService from '@provider/storage.service';
-import { Storage } from '@interface/storage.interface';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('storage')
 class StorageController {
   constructor(private readonly storageService: StorageService) {}
 
-  @Get('findOne/:id')
-  async findOne(@Param('id') id: string): Promise<any> {
-    return this.storageService.findOne(id);
+  @Get('findOneAudio/:id')
+  async findOneAudio(@Param('id') id: string): Promise<any> {
+    return this.storageService.findOne(id, false);
   }
 
-  @Post('upload')
+  @Get('findOneImage/:id')
+  async findOneImage(@Param('id') id: string): Promise<any> {
+    return this.storageService.findOne(id, true);
+  }
+
+  @Post('uploadAudio')
   @UseInterceptors(FileInterceptor('audio'))
-  async create(@UploadedFile() audio: Express.Multer.File): Promise<any> {
-    return this.storageService.upload(audio);
+  async uploadAudio(
+    @UploadedFile() audio: Express.Multer.File,
+    image: Express.Multer.File,
+  ): Promise<any> {
+    return this.storageService.upload(audio, false);
+  }
+
+  @Post('uploadImage')
+  @UseInterceptors(FileInterceptor('image'))
+  async uploadImage(
+    @UploadedFile()
+    image: Express.Multer.File,
+  ): Promise<any> {
+    return this.storageService.upload(image, true);
   }
 }
 export default StorageController;

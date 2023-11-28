@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { getStorage } from 'firebase/storage';
 import { Storage, Storageresult } from '@interface/storage.interface';
 import firebaseAdmin from 'firebase-admin';
-import { url } from 'inspector';
+import { File } from '@google-cloud/storage';
 
 @Injectable()
 class StorageService {
@@ -13,10 +12,15 @@ class StorageService {
     result: null,
   };
 
-  async findOne(id: string): Promise<any> {
+  async findOne(id: string, isimage: boolean): Promise<any> {
     var downloadUrl: string[];
+    var file: File;
     const bucket = firebaseAdmin.storage().bucket();
-    const file = bucket.file(`AudioRecord/${id}`);
+    if (!isimage) {
+      file = bucket.file(`AudioRecord/${id}`);
+    } else {
+      file = bucket.file(`Images/${id}`);
+    }
     const exists = await file.exists();
     if (exists[0]) {
       downloadUrl = await file.getSignedUrl({
@@ -33,15 +37,19 @@ class StorageService {
     return this.storageresult;
   }
 
-  async upload(audio: Express.Multer.File): Promise<any> {
-    console.log(audio);
+  async upload(file: Express.Multer.File, isimage: boolean): Promise<any> {
+    var filePath: string;
     const bucket = firebaseAdmin.storage().bucket();
-    const filePath = `AudioRecord/${Date.now()}_${audio.originalname}`;
+    if (!isimage) {
+      filePath = `AudioRecord/${Date.now()}_${file.originalname}`;
+    } else {
+      filePath = `Images/${Date.now()}_${file.originalname}`;
+    }
     const fileUpload = bucket.file(filePath);
 
     const stream = fileUpload.createWriteStream({
       metadata: {
-        contentType: audio.mimetype,
+        contentType: file.mimetype,
       },
     });
 
@@ -50,13 +58,13 @@ class StorageService {
       throw new Error('Error uploading file to Firebase Storage');
     });
     stream.on('finish', async () => {
-      console.log(`Audio file uploaded to: ${filePath}`);
+      console.log(`File uploaded to: ${filePath}`);
     });
     const downloadUrl = await fileUpload.getSignedUrl({
       action: 'read',
       expires: Date.now() + this.oneDayMilliseconds,
     });
-    stream.end(audio.buffer);
+    stream.end(file.buffer);
     this.storageresult.message = 'ok';
     this.storageresult.result = downloadUrl;
     return this.storageresult;
