@@ -25,10 +25,7 @@ class StorageController {
 
   @Post('uploadAudio')
   @UseInterceptors(FileInterceptor('audio'))
-  async uploadAudio(
-    @UploadedFile() audio: Express.Multer.File,
-    image: Express.Multer.File,
-  ): Promise<any> {
+  async uploadAudio(@UploadedFile() audio: Express.Multer.File): Promise<any> {
     return this.storageService.upload(audio, false);
   }
 

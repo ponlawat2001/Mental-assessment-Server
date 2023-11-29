@@ -6,4 +6,5 @@ export interface Audio {
   audioUrl: string;
   update_at: Timestamp;
   create_at: Timestamp;
+  is_delete: boolean;
 }

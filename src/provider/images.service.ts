@@ -12,7 +12,7 @@ class ImagesService {
     result: null,
   };
 
-  async findOne(owner: string): Promise<any> {
+  async findOwner(owner: string): Promise<any> {
     const db = getFirestore();
     await db
       .collection('Images')

@@ -6,9 +6,9 @@ import ImagesService from '@provider/images.service';
 class ImagesController {
   constructor(private readonly imagesService: ImagesService) {}
 
-  @Get('findOne/:owner')
+  @Get('findOwner/:owner')
   async findOne(@Param('owner') owner: string): Promise<any> {
-    return this.imagesService.findOne(owner);
+    return this.imagesService.findOwner(owner);
   }
 
   @Post('create')

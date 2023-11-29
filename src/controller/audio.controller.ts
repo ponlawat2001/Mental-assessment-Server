@@ -6,9 +6,9 @@ import AudioService from '@provider/audio.service';
 class AudioController {
   constructor(private readonly audioService: AudioService) {}
 
-  @Get('findOne/:email')
-  async findOne(@Param('email') email: string): Promise<any> {
-    return this.audioService.findOne(email);
+  @Get('findOwner/:owner')
+  async findOne(@Param('owner') owner: string): Promise<any> {
+    return this.audioService.findOwner(owner);
   }
 
   @Post('create')
@@ -19,6 +19,11 @@ class AudioController {
   @Put('update/:id')
   async update(@Body() body: Audio, @Param('id') id: string): Promise<any> {
     return this.audioService.update(body, id);
+  }
+
+  @Put('delete/:id')
+  async delete(@Param('id') id: string): Promise<any> {
+    return this.audioService.delete(id);
   }
 }
 export default AudioController;
