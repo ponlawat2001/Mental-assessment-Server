@@ -19,9 +19,11 @@ import { ContactModule } from 'src/modules/contact.module';
 import { StorageModule } from 'src/modules/storage.module';
 import { AudioModule } from 'src/modules/audio.module';
 import { ImagesModule } from 'src/modules/images.module';
+import { AssessmentModule } from 'src/modules/assessment.module';
 
 @Module({
   imports: [
+    AssessmentModule,
     AuthModule,
     NewsModule,
     VentModule,

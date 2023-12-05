@@ -6,7 +6,7 @@ import { File } from '@google-cloud/storage';
 @Injectable()
 class StorageService {
   private readonly storage: Storage[] = [];
-  private readonly oneDayMilliseconds = 24 * 60 * 60 * 1000; // 1 day in milliseconds
+  private readonly oneYearMilliseconds = 24 * 60 * 60 * 1000 * 365; // 365 day in milliseconds
   private storageresult: Storageresult = {
     message: '',
     result: null,
@@ -25,7 +25,7 @@ class StorageService {
     if (exists[0]) {
       downloadUrl = await file.getSignedUrl({
         action: 'read',
-        expires: Date.now() + this.oneDayMilliseconds,
+        expires: Date.now() + this.oneYearMilliseconds,
       });
       this.storageresult.message = 'Ok';
       this.storageresult.result = downloadUrl;
@@ -62,7 +62,7 @@ class StorageService {
     });
     const downloadUrl = await fileUpload.getSignedUrl({
       action: 'read',
-      expires: Date.now() + this.oneDayMilliseconds,
+      expires: Date.now() + this.oneYearMilliseconds,
     });
     stream.end(file.buffer);
     this.storageresult.message = 'ok';
