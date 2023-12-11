@@ -1,4 +1,4 @@
-import { Audio } from '@interface/audio.interface';
+import { Assessment } from '@interface/assessment.interface';
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import AssessmentService from '@provider/assessment.service';
 
@@ -17,12 +17,15 @@ class AssessmentController {
   }
 
   @Post('create')
-  async create(@Body() body: Audio): Promise<any> {
+  async create(@Body() body: Assessment): Promise<any> {
     return this.assessmentService.create(body);
   }
 
   @Put('update/:id')
-  async update(@Body() body: Audio, @Param('id') id: string): Promise<any> {
+  async update(
+    @Body() body: Assessment,
+    @Param('id') id: string,
+  ): Promise<any> {
     return this.assessmentService.update(body, id);
   }
 

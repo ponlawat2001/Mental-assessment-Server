@@ -4,11 +4,33 @@ export interface Assessment {
   id: string;
   name: string;
   description: string;
-  questionnaire: Map<string, boolean>;
-  answer: Map<string, number>;
-  scorerate: Map<string, Map<string, number>>;
-  advise: Map<string, string>;
+  questionnaire: Questionnaire;
+  answer: Answer[];
+  scorerate: Scorerate[];
+  advise: Advise[];
   update_at: Timestamp;
   create_at: Timestamp;
   is_delete: boolean;
+}
+
+export interface Advise {
+  name: string;
+  advise: string;
+  rate: number;
+}
+
+export interface Answer {
+  name: string;
+  score: number;
+}
+
+export interface Questionnaire {
+  question: string[];
+  reversescore: boolean[];
+}
+
+export interface Scorerate {
+  name: string;
+  questionnairenumber: number[];
+  rate: Answer[];
 }
