@@ -16,9 +16,16 @@ import { log } from 'console';
 import { AvatarModule } from 'src/modules/avatar.modult';
 import { VentChoiceModule } from 'src/modules/vent_choice.module';
 import { ContactModule } from 'src/modules/contact.module';
+import { StorageModule } from 'src/modules/storage.module';
+import { AudioModule } from 'src/modules/audio.module';
+import { ImagesModule } from 'src/modules/images.module';
+import { AssessmentModule } from 'src/modules/assessment.module';
+import { HistoryModule } from 'src/modules/historymodules';
 
 @Module({
   imports: [
+    HistoryModule,
+    AssessmentModule,
     AuthModule,
     NewsModule,
     VentModule,
@@ -26,6 +33,9 @@ import { ContactModule } from 'src/modules/contact.module';
     UsersModule,
     AvatarModule,
     ContactModule,
+    AudioModule,
+    ImagesModule,
+    StorageModule,
   ],
   controllers: [AppController, FirebaseController],
   providers: [AppService],
@@ -46,6 +56,11 @@ export class AppModule implements NestModule {
       { path: 'avatars/*' },
       { path: 'vent/*' },
       { path: 'contact/*' },
+      { path: 'audio/*' },
+      { path: 'image/*' },
+      { path: 'storage/*' },
+      { path: 'assessment/*' },
+      { path: 'history/*' },
     ];
     route.map((element) => {
       log(element.path);

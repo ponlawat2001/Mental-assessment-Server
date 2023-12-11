@@ -105,7 +105,6 @@ class AvatarService {
       .collection('Avatars')
       .doc(id)
       .update({
-        email: body.email,
         avatar: body.avatar,
         update_at: firestore.Timestamp.now(),
       })
