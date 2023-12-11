@@ -20,9 +20,11 @@ import { StorageModule } from 'src/modules/storage.module';
 import { AudioModule } from 'src/modules/audio.module';
 import { ImagesModule } from 'src/modules/images.module';
 import { AssessmentModule } from 'src/modules/assessment.module';
+import { HistoryModule } from 'src/modules/historymodules';
 
 @Module({
   imports: [
+    HistoryModule,
     AssessmentModule,
     AuthModule,
     NewsModule,
@@ -57,6 +59,8 @@ export class AppModule implements NestModule {
       { path: 'audio/*' },
       { path: 'image/*' },
       { path: 'storage/*' },
+      { path: 'assessment/*' },
+      { path: 'history/*' },
     ];
     route.map((element) => {
       log(element.path);
