@@ -16,6 +16,11 @@ class HistoryController {
     return this.historyService.findOne(id);
   }
 
+  @Get('findOwner/:owner')
+  async findOwner(@Param('owner') owner: string): Promise<any> {
+    return this.historyService.findOwner(owner);
+  }
+
   @Post('create')
   async create(@Body() body: History): Promise<any> {
     return this.historyService.create(body);
