@@ -16,6 +16,11 @@ class AssessmentController {
     return this.assessmentService.findOne(id);
   }
 
+  @Get('findMain')
+  async findMain(): Promise<any> {
+    return this.assessmentService.findMain();
+  }
+
   @Post('create')
   async create(@Body() body: Assessment): Promise<any> {
     return this.assessmentService.create(body);

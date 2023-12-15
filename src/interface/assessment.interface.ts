@@ -4,6 +4,7 @@ export interface Assessment {
   id: string;
   name: string;
   description: string;
+  type: string;
   questionnaire: Questionnaire;
   answer: Answer[];
   scorerate: Scorerate[];
