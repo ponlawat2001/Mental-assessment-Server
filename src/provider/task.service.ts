@@ -144,6 +144,23 @@ class TaskService {
       });
     return this.taskresult;
   }
+
+  async delete(id: string) {
+    const db = getFirestore();
+    await db
+      .collection('Task')
+      .doc(id)
+      .delete()
+      .then(() => {
+        this.taskresult.message = 'Delete Successfully';
+        this.taskresult.result = [];
+      })
+      .catch((error) => {
+        this.taskresult.message = error.code;
+        this.taskresult.result = [];
+      });
+    return this.taskresult;
+  }
 }
 
 export default TaskService;

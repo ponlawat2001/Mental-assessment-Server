@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { History } from '@interface/history.interface';
 import TaskService from '@provider/task.service';
 
@@ -24,6 +32,11 @@ class TaskController {
   @Post('create')
   async create(@Body() body: History): Promise<any> {
     return this.taskService.create(body);
+  }
+
+  @Delete('delete/:id')
+  async delete(@Param('id') id: string): Promise<any> {
+    return this.taskService.delete(id);
   }
 }
 export default TaskController;
