@@ -166,6 +166,7 @@ class AssessmentService {
       .collection('Assessment')
       .add(<Assessment>{
         name: body.name,
+        type: body.type,
         description: body.description,
         questionnaire: body.questionnaire,
         answer: body.answer,

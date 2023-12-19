@@ -5,7 +5,7 @@ export interface Assessment {
   name: string;
   description: string;
   type: string;
-  questionnaire: Questionnaire;
+  questionnaire: Questionnaire[];
   answer: Answer[];
   scorerate: Scorerate[];
   advise: Advise[];
@@ -26,8 +26,9 @@ export interface Answer {
 }
 
 export interface Questionnaire {
-  question: string[];
-  reversescore: boolean[];
+  id: number;
+  title: string;
+  reversescore: boolean;
 }
 
 export interface Scorerate {
