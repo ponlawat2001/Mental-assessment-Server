@@ -29,6 +29,11 @@ class TaskController {
     return this.taskService.findOwner(owner);
   }
 
+  @Put('update/:id')
+  update(@Body() body: History, @Param('id') id: string): Promise<any> {
+    return this.taskService.update(id, body);
+  }
+
   @Post('create')
   async create(@Body() body: History): Promise<any> {
     return this.taskService.create(body);

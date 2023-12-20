@@ -95,23 +95,23 @@ class TaskService {
 
   async update(id: string, body: Task) {
     const db = getFirestore();
+    console.log(id);
     await db
       .collection('Task')
       .doc(id)
       .update({
         summary: body.summary,
-        summaryrate: body.summaryrate,
         create_at: firestore.Timestamp.now(),
       })
       .then(() => {
         this.taskresult.message = 'Successfully Created';
         this.taskresult.result = <Task>{
           summary: body.summary,
-          summaryrate: body.summaryrate,
           create_at: firestore.Timestamp.now(),
         };
       })
       .catch((error) => {
+        console.log(error);
         this.taskresult.message = error.code;
         this.taskresult.result = [];
       });
@@ -126,12 +126,12 @@ class TaskService {
         type: body.type,
         owner: body.owner,
         summary: body.summary,
-        summaryrate: body.summaryrate,
         create_at: firestore.Timestamp.now(),
       })
-      .then(() => {
+      .then((res) => {
         this.taskresult.message = 'Successfully Created';
         this.taskresult.result = <Task>{
+          id: res.id,
           type: body.type,
           owner: body.owner,
           summary: body.summary,
