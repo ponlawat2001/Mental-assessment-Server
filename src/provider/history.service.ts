@@ -25,7 +25,6 @@ class HistoryService {
           id: element.id,
           owner: element.data().owner,
           type: element.data().type,
-          summaryrate: element.data().summaryrate,
           summary: element.data().summary,
           create_at: element.data().create_at,
         });
@@ -48,7 +47,6 @@ class HistoryService {
           this.history.push({
             id: element.id,
             owner: element.data().owner,
-            summaryrate: element.data().summaryrate,
             type: element.data().type,
             summary: element.data().summary,
             create_at: element.data().create_at,
@@ -82,7 +80,6 @@ class HistoryService {
         id: doc.id,
         owner: doc.data().owner,
         type: doc.data().type,
-        summaryrate: doc.data().summaryrate,
         summary: doc.data().summary,
         create_at: doc.data().create_at,
       });
@@ -100,12 +97,12 @@ class HistoryService {
         type: body.type,
         owner: body.owner,
         summary: body.summary,
-        summaryrate: body.summaryrate,
         create_at: firestore.Timestamp.now(),
       })
-      .then(() => {
+      .then((res) => {
         this.historyresult.message = 'Successfully Created';
         this.historyresult.result = <History>{
+          id: res.id,
           type: body.type,
           owner: body.owner,
           summary: body.summary,

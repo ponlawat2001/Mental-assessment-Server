@@ -4,7 +4,6 @@ export interface History {
   id: string;
   type: string;
   owner: string;
-  summaryrate: string;
   summary: summary[];
   create_at: Timestamp;
 }
@@ -14,7 +13,6 @@ export interface summary {
   useranswer: Useranswer[];
   scorerate: Scorerate[];
   totalscore: number;
-  totalrate: string;
   advise: string;
 }
 
