@@ -22,14 +22,10 @@ import { ImagesModule } from 'src/modules/images.module';
 import { AssessmentModule } from 'src/modules/assessment.module';
 import { HistoryModule } from 'src/modules/historymodules';
 import { TaskModule } from 'src/modules/task.module';
-import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 
 @Module({
   imports: [
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'dist'),
-    }),
     TaskModule,
     HistoryModule,
     AssessmentModule,
