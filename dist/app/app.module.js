@@ -26,6 +26,8 @@ const images_module_1 = require("../modules/images.module");
 const assessment_module_1 = require("../modules/assessment.module");
 const historymodules_1 = require("../modules/historymodules");
 const task_module_1 = require("../modules/task.module");
+const serve_static_1 = require("@nestjs/serve-static");
+const path_1 = require("path");
 let AppModule = exports.AppModule = class AppModule {
     configure(consumer) {
         let route = [
@@ -58,6 +60,9 @@ let AppModule = exports.AppModule = class AppModule {
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            serve_static_1.ServeStaticModule.forRoot({
+                rootPath: (0, path_1.join)(__dirname, '..', 'dist'),
+            }),
             task_module_1.TaskModule,
             historymodules_1.HistoryModule,
             assessment_module_1.AssessmentModule,
