@@ -12,7 +12,7 @@ class PreauthMiddleware implements NestMiddleware {
       type: process.env.type,
       projectId: process.env.project_id,
       privateKeyId: process.env.project_id,
-      privateKey: process.env.private_key,
+      privateKey: process.env.private_key.replace(/\\n/g, '\n'),
       clientEmail: process.env.client_email,
       clientId: process.env.client_id,
       authUri: process.env.auth_uri,
