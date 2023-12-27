@@ -17,6 +17,9 @@ jobs:
       - name: Build Nest.js App
         run: npm run build
         
+      - name: Run Server
+        run: npm run start:prod
+        
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
