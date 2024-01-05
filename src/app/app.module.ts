@@ -57,6 +57,7 @@ export class AppModule implements NestModule {
       { path: 'users/update/*' },
       { path: 'users/delete/*' },
       { path: 'avatars/*' },
+      { path: 'ventchoice/*' },
       { path: 'vent/*' },
       { path: 'contact/*' },
       { path: 'audio/*' },
