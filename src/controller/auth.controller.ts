@@ -6,6 +6,11 @@ import AuthService from '@provider/auth.service';
 class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Post('/email/reset')
+  async Email_reset(@Body() body: Login): Promise<any> {
+    return this.authService.Reset_password(body);
+  }
+
   @Post('/Anonymous/login')
   async Anonymous_login(): Promise<any> {
     return this.authService.Anonymous_login();
