@@ -7,7 +7,6 @@ import {
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import PreauthMiddleware from '../middleware/preauth.middleware';
-import FirebaseController from '../controller/firebase.controller';
 import { AuthModule } from '../modules/auth.module';
 import { NewsModule } from '../modules/news.module';
 import { VentModule } from '../modules/vent.module';
@@ -40,7 +39,7 @@ import { join } from 'path';
     ImagesModule,
     StorageModule,
   ],
-  controllers: [AppController, FirebaseController],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule implements NestModule {
