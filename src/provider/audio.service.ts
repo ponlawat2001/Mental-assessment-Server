@@ -11,6 +11,38 @@ class AudioService {
     result: null,
   };
 
+  async findAll() {
+    const db = getFirestore();
+    const VentsRef = db.collection('Audio');
+    await VentsRef.where('is_delete', '==', false)
+      .orderBy('create_at', 'desc')
+      .get()
+      .then((element) => {
+        this.audio.length = 0;
+        element.forEach((element) => {
+          this.audio.push({
+            id: element.id,
+            owner: element.data().owner,
+            audioUrl: element.data().audioUrl,
+            create_at: element.data().create_at,
+            update_at: element.data().update_at,
+            is_delete: element.data().is_delete,
+          });
+        });
+
+        this.audioresult.message = 'Ok';
+        this.audioresult.result = this.audio;
+        return this.audioresult;
+      })
+      .catch(() => {
+        console.log('Document is Empty');
+        this.audioresult.message = 'Document is Empty';
+        this.audioresult.result = null;
+        return this.audioresult;
+      });
+    return this.audioresult;
+  }
+
   async findOwner(owner: string): Promise<any> {
     const db = getFirestore();
     const VentsRef = db.collection('Audio');
