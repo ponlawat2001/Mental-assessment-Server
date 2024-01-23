@@ -122,6 +122,7 @@ class AssessmentService {
       .doc(id)
       .update({
         name: body.name,
+        type: body.type,
         description: body.description,
         questionnaire: body.questionnaire,
         answer: body.answer,
