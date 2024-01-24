@@ -12,6 +12,39 @@ class AssessmentService {
     result: null,
   };
 
+  async findAdmin(): Promise<any> {
+    const db = getFirestore();
+    const AssessmentRef = db
+      .collection('Assessment')
+      .orderBy('update_at', 'desc');
+    const doc = await AssessmentRef.get();
+    this.assessment.length = 0;
+    if (doc.empty) {
+      console.log('Document is Empty');
+      this.assessmentresult.message = 'Document is Empty';
+      this.assessmentresult.result = [];
+    } else {
+      doc.docs.map((element) => {
+        this.assessment.push({
+          id: element.id,
+          name: element.data().name,
+          description: element.data().description,
+          type: element.data().type,
+          questionnaire: element.data().questionnaire,
+          answer: element.data().answer,
+          scorerate: element.data().scorerate,
+          advise: element.data().advise,
+          create_at: element.data().create_at,
+          update_at: element.data().update_at,
+          is_delete: element.data().is_delete,
+        });
+        this.assessmentresult.message = 'Ok';
+        this.assessmentresult.result = this.assessment;
+      });
+    }
+    return this.assessmentresult;
+  }
+
   async findAll(): Promise<any> {
     const db = getFirestore();
     const AssessmentRef = db

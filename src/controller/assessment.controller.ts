@@ -6,6 +6,11 @@ import AssessmentService from '@provider/assessment.service';
 class AssessmentController {
   constructor(private readonly assessmentService: AssessmentService) {}
 
+  @Get('findAdmin')
+  async findAdmin(): Promise<any> {
+    return this.assessmentService.findAdmin();
+  }
+
   @Get('findAll')
   async findAll(): Promise<any> {
     return this.assessmentService.findAll();

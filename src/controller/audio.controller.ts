@@ -6,6 +6,11 @@ import AudioService from '@provider/audio.service';
 class AudioController {
   constructor(private readonly audioService: AudioService) {}
 
+  @Get('findAdmin')
+  async findAdmin(): Promise<any> {
+    return this.audioService.findAdmin();
+  }
+
   @Get('findAll')
   async findAll(): Promise<any> {
     return this.audioService.findAll();
