@@ -21,7 +21,7 @@ import { ImagesModule } from 'src/modules/images.module';
 import { AssessmentModule } from 'src/modules/assessment.module';
 import { HistoryModule } from 'src/modules/historymodules';
 import { TaskModule } from 'src/modules/task.module';
-import { join } from 'path';
+import { AdminusersModule } from 'src/modules/adminusers.module';
 
 @Module({
   imports: [
@@ -38,6 +38,7 @@ import { join } from 'path';
     AudioModule,
     ImagesModule,
     StorageModule,
+    AdminusersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
@@ -65,6 +66,10 @@ export class AppModule implements NestModule {
       { path: 'assessment/*' },
       { path: 'history/*' },
       { path: 'task/* ' },
+      { path: 'admin/delete/*' },
+      { path: 'admin/update/*' },
+      { path: 'admin/create/*' },
+      { path: 'admin/findOne/*' },
     ];
     route.map((element) => {
       log(element.path);
