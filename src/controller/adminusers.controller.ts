@@ -1,5 +1,13 @@
 import { Adminusers } from '@interface/adminusers.interface';
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import AdminusersService from '@provider/adminusers.service';
 
 @Controller('admin')
@@ -34,7 +42,7 @@ class AdminusersController {
     return this.adminusersService.update(body, id);
   }
 
-  @Put('delete/:id')
+  @Delete('delete/:id')
   async delete(@Param('id') id: string): Promise<any> {
     return this.adminusersService.delete(id);
   }
