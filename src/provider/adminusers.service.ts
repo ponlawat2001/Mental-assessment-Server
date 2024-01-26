@@ -35,6 +35,30 @@ class AdminusersService {
     return this.adminresult;
   }
 
+  async findEmail(email: string): Promise<any> {
+    const db = getFirestore();
+    const AdminRef = db.collection('Admin').where('email', '==', email);
+    const doc = await AdminRef.get();
+    this.adminusers.length = 0;
+    if (doc.empty) {
+      console.log('Document is Empty');
+      this.adminresult.message = 'Document is Empty';
+      this.adminresult.result = [];
+    } else {
+      doc.docs.map((element) => {
+        this.adminusers.push({
+          id: element.id,
+          email: element.data().email,
+          create_at: element.data().create_at,
+          update_at: element.data().update_at,
+        });
+        this.adminresult.message = 'Ok';
+        this.adminresult.result = this.adminusers;
+      });
+    }
+    return this.adminresult;
+  }
+
   async findOne(id: string): Promise<any> {
     const db = getFirestore();
     const AdminRef = db.collection('Admin').doc(id);

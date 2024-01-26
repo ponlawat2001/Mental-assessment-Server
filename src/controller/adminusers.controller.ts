@@ -16,6 +16,11 @@ class AdminusersController {
     return this.adminusersService.findOne(id);
   }
 
+  @Get('findEmail/:email')
+  async findEmail(@Param('email') email: string): Promise<any> {
+    return this.adminusersService.findEmail(email);
+  }
+
   @Post('create')
   async create(@Body() body: Adminusers): Promise<any> {
     return this.adminusersService.create(body);
