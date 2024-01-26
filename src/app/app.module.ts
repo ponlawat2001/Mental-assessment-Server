@@ -67,6 +67,7 @@ export class AppModule implements NestModule {
       { path: 'history/*' },
       { path: 'task/* ' },
       { path: 'admin/delete/*' },
+      { path: 'admin/findAll' },
       { path: 'admin/update/*' },
       { path: 'admin/create/*' },
       { path: 'admin/findOne/*' },
