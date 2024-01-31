@@ -30,5 +30,10 @@ class AvatarController {
   async update(@Body() body: Avatar, @Param('id') id: string): Promise<any> {
     return this.avatarService.update(body, id);
   }
+
+  @Put('favorite/:id')
+  async favorite(@Body() body: Avatar, @Param('id') id: string): Promise<any> {
+    return this.avatarService.favorite(body, id);
+  }
 }
 export default AvatarController;
