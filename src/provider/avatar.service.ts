@@ -29,6 +29,7 @@ class AvatarService {
           id: element.id,
           email: element.data().email,
           avatar: element.data().avatar,
+          favorite: element.data().favorite,
           create_at: element.data().create_at,
           update_at: element.data().update_at,
         });
@@ -52,6 +53,7 @@ class AvatarService {
           id: element.id,
           email: element.data().email,
           avatar: element.data().avatar,
+          favorite: element.data().favorite,
           create_at: element.data().create_at,
           update_at: element.data().update_at,
         });
@@ -76,6 +78,7 @@ class AvatarService {
             id: element.id,
             email: element.data().email,
             avatar: element.data().avatar,
+            favorite: element.data().favorite,
             create_at: element.data().create_at,
             update_at: element.data().update_at,
           });
@@ -140,6 +143,26 @@ class AvatarService {
       })
       .catch((error) => {
         this.avatarresult.message = error.code;
+        this.avatarresult.result = [];
+      });
+    return this.avatarresult;
+  }
+
+  async favorite(body: Avatar, id: string): Promise<any> {
+    const db = getFirestore();
+    await db
+      .collection('Avatars')
+      .doc(id)
+      .update({
+        favorite: body.favorite,
+        update_at: firestore.Timestamp.now(),
+      })
+      .then(() => {
+        this.avatarresult.message = 'Successfully Favorite';
+        this.avatarresult.result = [];
+      })
+      .catch((error) => {
+        this.avatarresult.message = error;
         this.avatarresult.result = [];
       });
     return this.avatarresult;
